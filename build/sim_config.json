@@ -1,0 +1,8 @@
+{
+    "source_files": [
+        "register.v"
+    ],
+    "test_files": [
+        "tb_register.v"
+    ]
+}
