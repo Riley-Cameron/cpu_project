@@ -36,7 +36,7 @@ def prompt_radio_choice(options, title="Select a testbench to run") -> str:
 
     # Add a radio button for each option
     for opt in options:
-        tk.Radiobutton(root, text=opt, variable=var, value=opt).pack(anchor="w")
+        tk.Radiobutton(root, text=opt, variable=var, value=opt).pack(anchor="w", padx=(10,20))
 
     # Submit button
     tk.Button(root, text="OK", command=on_submit).pack(pady=5)
@@ -45,6 +45,7 @@ def prompt_radio_choice(options, title="Select a testbench to run") -> str:
     root.mainloop()
 
     return selected["value"]
+
 
 def get_sim_files(config_file):
     with open(config_file, 'r') as f:
@@ -61,6 +62,7 @@ def get_sim_files(config_file):
 
     return source_files, test_file
 
+
 def run_cmd(cmd, cwd=None, check=True):
     print("\033[35m>>", shlex.join(cmd))
     try:
@@ -75,8 +77,9 @@ def run_cmd(cmd, cwd=None, check=True):
 
 
 def lint_file(file):
-    cmd = ["verilator", "--lint-only", file]
+    cmd = ["verilator", "--lint-only", f"-I{SOURCE_DIR}", file]
     run_cmd(cmd, check=False)
+
 
 def main():
     # Get files to include from sim_config.json

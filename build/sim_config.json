@@ -1,8 +1,12 @@
 {
     "source_files": [
-        "register.v"
+        "register.v",
+        "buffer.v",
+        "buffered_register.v"
     ],
     "test_files": [
-        "tb_register.v"
+        "tb_register.v",
+        "tb_buffer.v",
+        "tb_buffered_register.v"
     ]
 }

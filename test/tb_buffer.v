@@ -1,21 +1,16 @@
 `timescale 1ns/1ps
 /* verilator lint_off STMTDLY */
 module tb;
-    reg clk = 0;
-    reg ld = 0;
+    reg en = 0;
     reg [7:0] in = 0;
     wire [7:0] out;
 
     // Instantiate DUT (Design Under Test)
-    register #(8) dut (
-        .clk(clk),
-        .ld(ld),
+    buffer #(8) dut (
+        .en(en),
         .in(in),
         .out(out)
     );
-
-    // Clock generator
-    always #5 clk = ~clk;
 
     initial begin
         $dumpfile("dump.vcd");
@@ -23,11 +18,15 @@ module tb;
 
         // Test cases
         in = 8'h00; #8;
+        en = 1;     #5;
         in = 8'hAA; #10;
+        en = 0;     #5;
         in = 8'h55; #10;
-        in = 8'h00; ld = 1; #8;
-        in = 8'hAA; #10;
-        in = 8'h55; #10;
+        en = 1;     #5;
+        in = 8'h04; #10;
+        en = 0;     #5;
+        in = 8'hFF; #10;
+        en = 1;     #5;
 
         $finish;
     end
